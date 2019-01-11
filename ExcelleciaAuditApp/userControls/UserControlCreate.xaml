@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="ExcelleciaAuditApp.userControls.UserControlCreate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:ExcelleciaAuditApp.userControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}" 
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="14"
+             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+             mc:Ignorable="d" Height="540" Width="1010">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="Red">
+        <Grid Height="60" VerticalAlignment="Top" Background="{DynamicResource MaterialDesignBackground}" >
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
+            </Grid.Effect>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- simplest form -->
+                <materialDesign:Snackbar   
+                    Message="Please Select a Category Now"   
+                    IsActive="False"  
+                    x:Name="SnackbarOne" 
+                    Foreground="{DynamicResource PrimaryHueDarkBrush}"/>
+                <ComboBox  
+                    x:Name="cbxAudits"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    materialDesign:HintAssist.Hint="Search Audit"
+                    IsEditable="True"
+                    materialDesign:HintAssist.HintOpacity=".80"
+                    Margin="50,10"
+                    Width="Auto"
+                    SelectionChanged="CbxAudits_SelectionChanged"
+                    >
+                </ComboBox>
+                <ComboBox  
+                    x:Name="cbxCategories"
+                    Foreground="{DynamicResource MaterialDesignBody}"
+                    materialDesign:HintAssist.Hint="Search Category"
+                    IsEditable="True"
+                    materialDesign:HintAssist.HintOpacity=".80"
+                    Margin="50,10"
+                    Width="Auto" 
+                    GotFocus="CbxCategories_GotFocus" 
+                    LostFocus="CbxCategories_LostFocus"
+                    SelectionChanged="CbxCategories_SelectionChanged">
+                </ComboBox>
+                <materialDesign:Snackbar   
+                    MessageQueue="{materialDesign:MessageQueue}"
+                    IsActive="False"  
+                    x:Name="SnackbarTwo"
+                    Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                    />
+            </StackPanel>
+        </Grid>
+        <materialDesign:DialogHost x:Name="dlgHost1" Background="{DynamicResource MaterialDesignBackground}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Width="200" Height="50" Margin="20" Orientation="Vertical" x:Name="mbx" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock>Please Choose an audit first</TextBlock>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsDefault="True"
+                                        Margin="8"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <system:Boolean>True</system:Boolean>
+                        </Button.CommandParameter>
+                        OK
+                    </Button>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost x:Name="dlhHost2" Background="{DynamicResource MaterialDesignPaper}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel 
+                    Width="600" 
+                    Height="400" 
+                    Margin="20" 
+                    Orientation="Vertical" 
+                    x:Name="mbxAnswer" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    >
+                    <TextBlock TextElement.FontSize="18">
+                        Answer to Question 
+                        <TextBlock Text="{Binding Id}" TextElement.FontWeight="Bold" TextElement.Foreground="{DynamicResource SecondaryAccentBrush}"></TextBlock>
+                        Intitled : 
+                        <TextBlock Text="{Binding Intitled}"
+                                   TextElement.FontWeight="Bold" 
+                                   TextElement.Foreground="{DynamicResource SecondaryAccentBrush}"
+                                   TextElement.FontStyle="Italic"></TextBlock>
+                    </TextBlock>
+                    <TextBox 
+                        Text="{Binding Answer.Comment, Mode=TwoWay}" 
+                        materialDesign:HintAssist.Hint="Score" 
+                        materialDesign:HintAssist.IsFloating="True" Margin="0 12 0 0"></TextBox>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsDefault="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <system:Boolean>True</system:Boolean>
+                        </Button.CommandParameter>
+                        OK
+                    </Button>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <Grid Height="480" VerticalAlignment="Bottom">
+            <DataGrid 
+                CanUserSortColumns="True"
+                CanUserAddRows="False"
+                IsReadOnly="True"
+                SelectionMode="Single"
+                SelectionUnit="FullRow"
+                x:Name="dtgQuestions"
+                AutoGenerateColumns="True"
+                AutoGeneratingColumn="DtgQuestions_AutoGeneratingColumn" SelectionChanged="DtgQuestions_SelectionChanged"
+                >
+                
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

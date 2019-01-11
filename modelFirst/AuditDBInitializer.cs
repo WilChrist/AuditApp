@@ -2,6 +2,7 @@
 using SQLite.CodeFirst;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace modelFirst
 {
-    class AuditDBInitializer : SqliteDropCreateDatabaseAlways<AuditContext>
+    public class AuditDBInitializer : SqliteDropCreateDatabaseWhenModelChanges<AuditContext>
     {
         public AuditDBInitializer(DbModelBuilder modelBuilder) : base(modelBuilder)
         {
@@ -25,14 +26,20 @@ namespace modelFirst
             for (int i = 1; i <= numberOfObject; i++)
             {
                 #region
-                Category category = new Category()
+                List<Category> categories = new List<Category>();
+                for (int j = 1; j <= numberOfSubObject; j++)
                 {
-                    Id = i,
-                    Name = "Category " + i,
-                    CreatedAt = DateTime.Now,
-                    UpdateAt = DateTime.Now
-                };
-                context.Categories.Add(category);
+                    int k = (i - 1) * 10 + j;
+                    Category category = new Category()
+                    {
+                        Id = k,
+                        Name = "Category " + k,
+                        CreatedAt = DateTime.Now,
+                        UpdateAt = DateTime.Now
+                    };
+                    categories.Add(category);
+                }
+                context.Categories.AddRange(categories);
                 #endregion
 
                 #region
@@ -43,7 +50,7 @@ namespace modelFirst
                     LastName = "Of Excellecia Audit " + i,
                     Email = "auditer" + i + "@excellenciaudit.ma",
                     PhoneNumber = "+212 6 33 22 55 1" + i,
-                    Password = BCrypt.Net.BCrypt.HashPassword("123456789"),
+                    Password = BCrypt.Net.BCrypt.HashPassword("123456789", BCrypt.Net.BCrypt.GenerateSalt(), false, BCrypt.Net.HashType.SHA256),
                     CreatedAt = DateTime.Now,
                     UpdateAt = DateTime.Now
 
@@ -71,13 +78,15 @@ namespace modelFirst
                 List<Answer> answers = new List<Answer>();
                 for (int j = 1; j <= numberOfSubObject; j++)
                 {
+                    int k = (i - 1) * 10 + j;
                     Answer answer = new Answer()
                     {
-                        Id = j,
-                        Score = j,
-                        Recommandation = "Recommandation " + j,
-                        Comment = "Comment " + j,
-                        FaillureNumber = j,
+                        Id = k,
+                        Score = k,
+                        RecommandationToApply = "Recommandation To Apply" + k,
+                        RiskIncurred = "Risk Incurred",
+                        Comment = "Comment " + k,
+                        FaillureNumber = k,
                         CreatedAt = DateTime.Now,
                         UpdateAt = DateTime.Now
                     };
@@ -92,22 +101,25 @@ namespace modelFirst
                 List<Question> questions = new List<Question>();
                 for (int j = 1; j <= numberOfSubObject; j++)
                 {
+                    int k = (i - 1) * 10 + j;
                     Question question = new Question()
                     {
-                        Id = j,
-                        Intitled = "Intitled " + j,
-                        Details = "Details " + j,
+                        Id = k,
+                        Intitled = "Intitled " + k,
+                        Details = "Details " + k,
                         Coefficient = random.Next(1, 5),
                         Scale = 10,
+                        Recommandation = "Recommandation" + k,
+                        Risk = "Risk " + k,
                         CreatedAt = DateTime.Now,
                         UpdateAt = DateTime.Now,
                     };
                     
-                    question.Category = category;
+                    question.Category = categories.ElementAt(j-1);
                     question.Answer = answers.ElementAt(j-1);
                     questions.Add(question);
                 }
-                audit.Questions = questions;
+                audit.Questions = new ObservableCollection<Question>(questions);
                 //category.Questions = questions;
 
                 #endregion

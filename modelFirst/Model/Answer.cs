@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace modelFirst.Model
 {
-    class Answer
+    public class Answer
     {
         public int Id { get; set; }
         public int Score { get; set; }
-        public String Recommandation { get; set; }
+        public String RecommandationToApply { get; set; }
         public String Comment { get; set; }
         public int ? FaillureNumber { get; set; }
+        public bool ? Reply { get; set; }
+        public String RiskIncurred { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
 
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

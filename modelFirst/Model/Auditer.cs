@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace modelFirst.Model
 {
-    class Auditer
+    public class Auditer
     {
         public int Id { get; set; }
         public String FirstName { get; set; }
@@ -18,6 +19,6 @@ namespace modelFirst.Model
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<Audit> Audits { get; set; }
+        public virtual ObservableCollection<Audit> Audits { get; set; }
     }
 }

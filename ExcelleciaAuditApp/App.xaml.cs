@@ -13,5 +13,6 @@ namespace ExcelleciaAuditApp
     /// </summary>
     public partial class App : Application
     {
+        public static String AppName = "Excellencia Security Audit App";
     }
 }

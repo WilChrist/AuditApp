@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace modelFirst
 {
-    class AuditContext : DbContext
+    public class AuditContext : DbContext
     {
         public AuditContext() : base("AuditAppDB")
         {
@@ -34,6 +34,10 @@ namespace modelFirst
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Questions)
                 .WithRequired(q => q.Category);
+            modelBuilder.Entity<Question>()
+                .HasOptional(q => q.Answer)
+                .WithRequired(a => a.Question)
+                .Map(m => m.MapKey("Question_Id"));
 
             var sqliteConnectionInitializer = new AuditDBInitializer(modelBuilder);
             Database.SetInitializer(sqliteConnectionInitializer);
