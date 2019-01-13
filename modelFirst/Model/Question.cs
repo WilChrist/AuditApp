@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,11 @@ namespace modelFirst.Model
         public String Risk { get; set; }
 
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdateAt { get; set; } = DateTime.Now;
 
         public virtual Category Category { get; set; }
         public virtual ICollection<Audit> Audits { get; set; }
-        public virtual Answer Answer { get; set; }
+        public virtual ObservableCollection<Answer> Answers { get; set; }
     }
 }

@@ -16,8 +16,8 @@ namespace modelFirst.Model
         public String Password { get; set; }
         public String PhoneNumber { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdateAt { get; set; } = DateTime.Now;
 
         public virtual ObservableCollection<Audit> Audits { get; set; }
     }

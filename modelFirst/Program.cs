@@ -27,7 +27,7 @@ namespace modelFirst
                     foreach (var item in auditContext.Questions.ToList())
                     {
                         //auditContext.Entry(item).Reference(a => a.Answer).Load();
-                        Console.WriteLine(item.Answer.Comment);
+                        Console.WriteLine(item.Details);
                     }
                 }
             }

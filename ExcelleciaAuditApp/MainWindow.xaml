@@ -51,13 +51,38 @@
                 <TextBlock Text="{Binding Email}" VerticalAlignment="Center" FontSize="16"/>
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
                     <StackPanel Width="150">
-                        <Button Content="Account" x:Name="ButtonSave" Cursor="Hand" Click="ButtonSave_Click"/>
-                        <Button Content="Settings"/>
-                        <Button Content="Help"/>
+                        <Button x:Name="ButtonSave" Cursor="Hand" Click="ButtonSave_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentSaveAll" Margin="10,15,5,10"/>
+                                <TextBlock Text="Save" Margin="5,15,5,10"/>
+                            </StackPanel>
+                        </Button>
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="SettingsOutline" Margin="10,15,5,10"/>
+                                <TextBlock Text="Settings" Margin="5,15,5,10"/>
+                            </StackPanel>
+                        </Button>
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="HelpOutline" Margin="10,15,5,10"/>
+                                <TextBlock Text="Help" Margin="5,15,5,10"/>
+                            </StackPanel>
+                        </Button>
                         <Separator/>
-                        <Button Content="Logout"/>
+                        <Button x:Name="ButtonLogout" Cursor="Hand" Click="ButtonLogout_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="LogoutVariant" Margin="10,15,5,10"/>
+                                <TextBlock Text="Logout" Margin="5,15,5,10"/>
+                            </StackPanel>
+                        </Button>
                         <Separator/>
-                        <Button Content="Quit" x:Name="ButtonQuit" Cursor="Hand" Click="ButtonQuit_Click" />
+                        <Button x:Name="ButtonQuit" Cursor="Hand" Click="ButtonQuit_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Power" Margin="10,15,5,10"/>
+                                <TextBlock Text="Quit" Margin="5,15,5,10"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>

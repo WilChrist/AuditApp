@@ -90,6 +90,7 @@ namespace modelFirst
                         CreatedAt = DateTime.Now,
                         UpdateAt = DateTime.Now
                     };
+                    answer.Audit = audit;
                     answers.Add(answer);
                     context.Answers.Add(answer);
                 }
@@ -116,7 +117,8 @@ namespace modelFirst
                     };
                     
                     question.Category = categories.ElementAt(j-1);
-                    question.Answer = answers.ElementAt(j-1);
+                    question.Answers = new ObservableCollection<Answer>();
+                    question.Answers.Add(answers.ElementAt(j-1));
                     questions.Add(question);
                 }
                 audit.Questions = new ObservableCollection<Question>(questions);

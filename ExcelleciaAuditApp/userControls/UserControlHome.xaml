@@ -108,6 +108,7 @@
                        AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
                        IsReadOnly="False"
                        SelectionMode="Single" 
+                       x:Name="dtgAudits" AddingNewItem="DtgAudits_AddingNewItem"
                        />
         </Grid>
     </StackPanel>

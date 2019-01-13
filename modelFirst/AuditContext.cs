@@ -20,8 +20,7 @@ namespace modelFirst
         {
 
             modelBuilder.Entity<Answer>()
-                .HasRequired(a => a.Question)
-                .WithOptional(q => q.Answer);
+                .HasRequired(a => a.Audit);
 
             modelBuilder.Entity<Audit>()
                 .HasMany(a=>a.Questions)
@@ -35,8 +34,8 @@ namespace modelFirst
                 .HasMany(c => c.Questions)
                 .WithRequired(q => q.Category);
             modelBuilder.Entity<Question>()
-                .HasOptional(q => q.Answer)
-                .WithRequired(a => a.Question)
+                .HasMany(q=>q.Answers)
+                .WithRequired(a=>a.Question)
                 .Map(m => m.MapKey("Question_Id"));
 
             var sqliteConnectionInitializer = new AuditDBInitializer(modelBuilder);

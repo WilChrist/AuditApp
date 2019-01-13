@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:ExcelleciaAuditApp.userControls"
+             xmlns:localHelper="clr-namespace:ExcelleciaAuditApp.helper"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}" 
@@ -17,6 +18,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <localHelper:InvertBooleanConverter  x:Key="boolConvert"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="Red">
@@ -32,10 +34,10 @@
                     x:Name="SnackbarOne" 
                     Foreground="{DynamicResource PrimaryHueDarkBrush}"/>
                 <ComboBox  
+                    materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                     x:Name="cbxAudits"
                     Foreground="{DynamicResource MaterialDesignBody}"
                     materialDesign:HintAssist.Hint="Search Audit"
-                    IsEditable="True"
                     materialDesign:HintAssist.HintOpacity=".80"
                     Margin="50,10"
                     Width="Auto"
@@ -43,10 +45,10 @@
                     >
                 </ComboBox>
                 <ComboBox  
+                    materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                     x:Name="cbxCategories"
                     Foreground="{DynamicResource MaterialDesignBody}"
                     materialDesign:HintAssist.Hint="Search Category"
-                    IsEditable="True"
                     materialDesign:HintAssist.HintOpacity=".80"
                     Margin="50,10"
                     Width="Auto" 
@@ -82,35 +84,140 @@
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel 
                     Width="600" 
-                    Height="400" 
+                    Height="450" 
                     Margin="20" 
                     Orientation="Vertical" 
                     x:Name="mbxAnswer" 
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     >
-                    <TextBlock TextElement.FontSize="18">
-                        Answer to Question 
-                        <TextBlock Text="{Binding Id}" TextElement.FontWeight="Bold" TextElement.Foreground="{DynamicResource SecondaryAccentBrush}"></TextBlock>
-                        Intitled : 
-                        <TextBlock Text="{Binding Intitled}"
-                                   TextElement.FontWeight="Bold" 
-                                   TextElement.Foreground="{DynamicResource SecondaryAccentBrush}"
-                                   TextElement.FontStyle="Italic"></TextBlock>
-                    </TextBlock>
-                    <TextBox 
-                        Text="{Binding Answer.Comment, Mode=TwoWay}" 
-                        materialDesign:HintAssist.Hint="Score" 
-                        materialDesign:HintAssist.IsFloating="True" Margin="0 12 0 0"></TextBox>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                    <GroupBox  
+                        Header="Card Group Box"  
+                        Style="{DynamicResource MaterialDesignCardGroupBox}"  
+                        Margin="16">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate x:Name="mbxDT">
+                                <StackPanel  
+                                    x:Name="headermbx"
+                                    Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Kind="QuestionMarkRhombusOutline"
+                                        Height="32"          
+                                        Width="32"          
+                                        VerticalAlignment="Center"
+                                        Margin="10"/>
+
+                                    <TextBlock 
+                                        TextElement.FontSize="18" 
+                                        Margin="0,15,0,10">
+                                        Answer to Question 
+                                        <TextBlock 
+                                            Text="{Binding Id}"
+                                            TextElement.FontWeight="Bold" 
+                                            TextElement.Foreground="Black">
+                                            
+                                        </TextBlock>
+                                        Intitled : 
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <StackPanel>
+
+                            <TextBlock 
+                                Text="{Binding Intitled}"
+                                TextElement.FontWeight="Bold"
+                                TextElement.Foreground="Black"
+                                TextElement.FontStyle="Italic"
+                                TextElement.FontSize="18"
+                                Margin="15,10,15,10">
+
+                            </TextBlock>
+                            <StackPanel  x:Name="stkpAnswer">
+                                <StackPanel Orientation="Horizontal" Margin="10">
+                                    <RadioButton 
+                                    GroupName="radioReply"
+                                    x:Name="radio1" 
+                                    IsChecked="{Binding Reply, Mode=TwoWay}"  
+                                    Style="{StaticResource MaterialDesignRadioButton}"
+                                    Content="Yes"
+                                    Margin="20"/>
+
+                                    <RadioButton 
+                                    GroupName="radioReply"
+                                    x:Name="radio2"   
+                                    Style="{StaticResource MaterialDesignRadioButton}"
+                                    Content="No"
+                                    IsChecked="{Binding Path=IsChecked, ElementName=radio1,Converter={StaticResource boolConvert}}"
+                                    Margin="20"/>
+
+                                    <ComboBox 
+                                    materialDesign:HintAssist.Hint="(Score)"
+                                    x:Name="cbxScores"
+                                    SelectedValue="{Binding Score}"  
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    Margin="20">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                    <TextBox 
+                                Text="{Binding FaillureNumber, Mode=TwoWay}"
+                                materialDesign:HintAssist.Hint="Faillure Number"
+                                materialDesign:HintAssist.IsFloating="True" Margin="20"/>
+                                </StackPanel>
+
+                                <StackPanel>
+                                    <TextBox
+                                    Text="{Binding RecommandationToApply, Mode=TwoWay}"
+                                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                    Margin="15,0,15,0"
+                                    VerticalAlignment="Top"
+                                    Height="100"
+                                    AcceptsReturn="True"
+                                    TextWrapping="Wrap" 
+                                    VerticalScrollBarVisibility="Auto"
+                                    materialDesign:HintAssist.Hint="Recommandation To Apply"
+                                    Visibility="{Binding Path=IsChecked, ElementName=radio1, Converter={StaticResource BooleanToVisibilityConverter }}" />
+                                    <TextBox
+                                    Text="{Binding RiskIncurred, Mode=TwoWay}"
+                                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                    Margin="15,0,15,0"
+                                    VerticalAlignment="Top"
+                                    Height="80"
+                                    AcceptsReturn="True"
+                                    TextWrapping="Wrap" 
+                                    VerticalScrollBarVisibility="Auto"
+                                    materialDesign:HintAssist.Hint="Risk Incurred"
+                                    Visibility="{Binding Path=IsChecked, ElementName=radio2, Converter={StaticResource BooleanToVisibilityConverter }}" />
+                                </StackPanel>
+                                <TextBox 
+                                Text="{Binding Comment, Mode=TwoWay}"
+                                materialDesign:HintAssist.Hint="Comment"
+                                materialDesign:HintAssist.IsFloating="True" Margin="15 15 15 0"/>
+                            </StackPanel>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
                                         IsDefault="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                        <Button.CommandParameter>
-                            <system:Boolean>True</system:Boolean>
-                        </Button.CommandParameter>
-                        OK
-                    </Button>
+                                        Margin="0 15 8 0"
+                                    Width="150"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand"
+                                    x:Name="ButtonSaveAnswer" Click="ButtonSaveAnswer_Click">
+                                <Button.CommandParameter>
+                                    <system:Boolean>True</system:Boolean>
+                                </Button.CommandParameter>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ContentSave" Margin="0,1,5,1"/>
+                                    <TextBlock Text="Save" Margin="5,1,5,1"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </GroupBox>
+
+
+
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
@@ -125,7 +232,7 @@
                 AutoGenerateColumns="True"
                 AutoGeneratingColumn="DtgQuestions_AutoGeneratingColumn" SelectionChanged="DtgQuestions_SelectionChanged"
                 >
-                
+
             </DataGrid>
         </Grid>
     </Grid>

@@ -68,13 +68,21 @@ namespace ExcelleciaAuditApp
 
         private void ButtonQuit_Click(object sender, RoutedEventArgs e)
         {
-            Session.Save();
             Application.Current.Shutdown();
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             Session.Save();
+        }
+
+        private void ButtonLogout_Click(object sender, RoutedEventArgs e)
+        {
+            Session.AuditContext.Dispose();
+            Session.CurrentAuditer = new modelFirst.Model.Auditer();
+            Window login = new Login();
+            login.Show();
+            Close();
         }
     }
 }

@@ -5,18 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ExcelleciaAuditApp.userControls
 {
@@ -25,7 +15,9 @@ namespace ExcelleciaAuditApp.userControls
     /// </summary>
     public partial class UserControlCreate : UserControl
     {
-        int i;
+        private int i;
+        private List<int> possibleScores;
+        private Question question;
         public UserControlCreate()
         {
             InitializeComponent();
@@ -37,14 +29,20 @@ namespace ExcelleciaAuditApp.userControls
             cbxAudits.ItemsSource = Session.CurrentAuditer.Audits;
             cbxAudits.DisplayMemberPath = "Name";
             i = 0;
+            possibleScores = new List<int>();
+            for (int j = 0; j <= 10; j++)
+            {
+                possibleScores.Add(j);
+            }
+            cbxScores.ItemsSource = possibleScores;
             //cbxCategories.ItemsSource = Session.AuditContext.Categories.ToList();
             //cbxCategories.DisplayMemberPath = "Name";
         }
-        
-        
+
+
         private void CbxCategories_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (cbxAudits.SelectedItem == null && i<1)
+            if (cbxAudits.SelectedItem == null && i < 1)
             {
                 //MessageBox.Show("Please Choose an audit first", App.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
                 dlgHost1.ShowDialog(mbx);
@@ -65,10 +63,10 @@ namespace ExcelleciaAuditApp.userControls
             audit = (Audit)cbxAudits.SelectedItem;
             //Session.AuditContext.Entry(audit).Collection(a => a.Questions).Load();
 
-            cbxCategories.ItemsSource =  Session.AuditContext.Categories.Where(c=>c.Questions.Any(q=>q.Audits.Any(a=>a.Id==audit.Id))).ToList();
+            cbxCategories.ItemsSource = Session.AuditContext.Categories.Where(c => c.Questions.Any(q => q.Audits.Any(a => a.Id == audit.Id))).ToList();
             cbxCategories.DisplayMemberPath = "Name";
             SnackbarOne.IsActive = true;
-            
+
         }
 
         private void CbxCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -81,7 +79,7 @@ namespace ExcelleciaAuditApp.userControls
 
             Audit audit = new Audit();
             audit = (Audit)cbxAudits.SelectedItem;
-           // Session.AuditContext.Entry(audit).Collection(a => a.Questions).Load();
+            // Session.AuditContext.Entry(audit).Collection(a => a.Questions).Load();
 
             Category category = new Category();
             category = (Category)cbxCategories.SelectedItem;
@@ -95,7 +93,7 @@ namespace ExcelleciaAuditApp.userControls
             PropertyDescriptor propertyDescriptor = (PropertyDescriptor)e.PropertyDescriptor;
             e.Column.Header = propertyDescriptor.DisplayName;
             e.Column.MinWidth = 100;
-            if (propertyDescriptor.DisplayName == "Audits" || propertyDescriptor.DisplayName == "Category" || propertyDescriptor.DisplayName == "Answer" || propertyDescriptor.DisplayName == "Recommandation")
+            if (propertyDescriptor.DisplayName == "Audits" || propertyDescriptor.DisplayName == "Category" || propertyDescriptor.DisplayName == "Answers" || propertyDescriptor.DisplayName == "Recommandation")
             {
                 e.Cancel = true;
             }
@@ -103,9 +101,36 @@ namespace ExcelleciaAuditApp.userControls
 
         private void DtgQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mbxAnswer.DataContext = (Question) dtgQuestions.SelectedItem;
-            dlhHost2.ShowDialog(mbxAnswer);
+            question = (Question)dtgQuestions.SelectedItem;
+            if (question != null)
+            {
+                Answer answer = question.Answers.FirstOrDefault(a => a.Audit.Id == ((Audit)cbxAudits.SelectedItem).Id);
+                if (answer == null)
+                {
+                    answer = new Answer
+                    {
+                        Audit = (Audit)cbxAudits.SelectedItem
+                    };
+                    question.Answers.Add(answer);
+                }
+
+                answer.RecommandationToApply = question.Recommandation;
+                answer.RiskIncurred = question.Risk;
+                mbxAnswer.DataContext = question;
+                stkpAnswer.DataContext = answer;
+                dlhHost2.ShowDialog(mbxAnswer);
+            }
+
             //MessageBox.Show("Please Choose an audit first", App.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ButtonSaveAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            SnackbarTwo.MessageQueue.Enqueue("Anwser well Saved");
+            SnackbarTwo.IsActive = true;
+            Session.Save();
+
+
         }
     }
 }

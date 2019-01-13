@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExcelleciaAuditApp.helper;
+using modelFirst.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -34,6 +36,30 @@ namespace ExcelleciaAuditApp.userControls
             {
                 e.Cancel = true;
             }
+        }
+
+        private void DtgAudits_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            e.NewItem = new Audit();
+            ((Audit)e.NewItem).Auditer = Session.CurrentAuditer;
+            List<Question> questions = new List<Question>();
+            foreach (var q in Session.AuditContext.Questions.Include("Audits").Include("Category").Include("Answers").ToList())
+            {
+                /*Question q1 = new Question();
+                q1.Category = q.Category;
+                q1.Audits = q.Audits;
+                q1.Coefficient = q.Coefficient;
+                q1.CreatedAt = q.CreatedAt;
+                q1.Details = q.Details;
+                q1.Id = q.Id;
+                q1.Intitled = q.Intitled;
+                q1.Answer = null;
+                q1.Audits.Add((Audit)e.NewItem);
+                questions.Add(q1);*/
+                q.Audits.Add(((Audit)e.NewItem));
+               // questions.Add(q.);
+            }
+            ((Audit)e.NewItem).Questions = new System.Collections.ObjectModel.ObservableCollection<Question>(questions);
         }
     }
 }

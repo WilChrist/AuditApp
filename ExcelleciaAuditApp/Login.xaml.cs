@@ -41,7 +41,7 @@ namespace ExcelleciaAuditApp
             Console.WriteLine($"{email} + {password}");
 
             
-                Auditer auditer = Session.AuditContext.Auditers.Include("Audits.Questions.Answer").FirstOrDefault(a => a.Email.Equals(email));
+                Auditer auditer = Session.AuditContext.Auditers.Include("Audits.Questions.Answers").FirstOrDefault(a => a.Email.Equals(email));
                 if (auditer != null && BCrypt.Net.BCrypt.Verify(password, auditer.Password, false, BCrypt.Net.HashType.SHA256))
                 {
                     Session.CurrentAuditer = auditer;
