@@ -22,6 +22,8 @@ namespace ExcelleciaAuditApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        UserControl uscDashboard = null;
+        UserControl uscAudit = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +34,11 @@ namespace ExcelleciaAuditApp
         {
             Session.AuditContext.Entry(Session.CurrentAuditer).Collection(a => a.Audits).Load();
             this.DataContext = Session.CurrentAuditer;
-            GridMain.Children.Add(new UserControlHome());
+
+            uscDashboard = new UserControlHome();
+            uscAudit = new UserControlCreate();
+
+            GridMain.Children.Add(uscDashboard);
         }
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -48,20 +54,18 @@ namespace ExcelleciaAuditApp
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UserControl usc = null;
             GridMain.Children.Clear();
 
             switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
             {
                 case "ItemHome":
-                    usc = new UserControlHome();
-                    GridMain.Children.Add(usc);
+                    GridMain.Children.Add(uscDashboard);
                     break;
                 case "ItemCreate":
-                    usc = new UserControlCreate();
-                    GridMain.Children.Add(usc);
+                    GridMain.Children.Add(uscAudit);
                     break;
                 default:
+                    MessageBox.Show("This Feature is not yes developped, please wait untill the next release or contact me at willynzesseu@gmail.com", App.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
             }
         }

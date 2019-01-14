@@ -26,20 +26,22 @@
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
             </Grid.Effect>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <!-- simplest form -->
                 <materialDesign:Snackbar   
                     Message="Please Select a Category Now"   
                     IsActive="False"  
                     x:Name="SnackbarOne" 
-                    Foreground="{DynamicResource PrimaryHueDarkBrush}"/>
+                    Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                    Margin="10,1,1,0"
+                    Width="Auto"/>
                 <ComboBox  
                     materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                     x:Name="cbxAudits"
                     Foreground="{DynamicResource MaterialDesignBody}"
                     materialDesign:HintAssist.Hint="Search Audit"
                     materialDesign:HintAssist.HintOpacity=".80"
-                    Margin="50,10"
+                    Margin="10,10"
                     Width="Auto"
                     SelectionChanged="CbxAudits_SelectionChanged"
                     >
@@ -50,19 +52,32 @@
                     Foreground="{DynamicResource MaterialDesignBody}"
                     materialDesign:HintAssist.Hint="Search Category"
                     materialDesign:HintAssist.HintOpacity=".80"
-                    Margin="50,10"
+                    Margin="10,10"
                     Width="Auto" 
                     GotFocus="CbxCategories_GotFocus" 
                     LostFocus="CbxCategories_LostFocus"
                     SelectionChanged="CbxCategories_SelectionChanged">
                 </ComboBox>
-                <Image Source="..\assets\parcit-logo.png" Height="50"/>
+                <!--<Image Source="..\assets\parcit-logo.png" Height="50"/>-->
+                <materialDesign:Badged 
+                            Badge="For Audit ?"  
+                            BadgeColorZoneMode="Dark"
+                            Margin="15"
+                            x:Name="bdgReport">
+                    <Button x:Name="ButtonGenerateReport" Cursor="Hand" Click="ButtonGenerateReport_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileDocumentOutline" Margin="1"/>
+                            <TextBlock Text="Generate Report" Margin="1"/>
+                        </StackPanel>
+                    </Button>
+                </materialDesign:Badged>
                 <materialDesign:Snackbar   
                     MessageQueue="{materialDesign:MessageQueue}"
                     IsActive="False"  
                     x:Name="SnackbarTwo"
                     Foreground="{DynamicResource PrimaryHueDarkBrush}"
-                    />
+                    Margin="10,1,20,0"
+                    Width="Auto"/>
             </StackPanel>
         </Grid>
         <materialDesign:DialogHost x:Name="dlgHost1" Background="{DynamicResource MaterialDesignBackground}">

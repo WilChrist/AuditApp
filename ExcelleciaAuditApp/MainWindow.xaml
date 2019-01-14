@@ -77,12 +77,16 @@
                             </StackPanel>
                         </Button>
                         <Separator/>
-                        <Button x:Name="ButtonQuit" Cursor="Hand" Click="ButtonQuit_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Power" Margin="10,15,5,10"/>
-                                <TextBlock Text="Quit" Margin="5,15,5,10"/>
-                            </StackPanel>
-                        </Button>
+                        <materialDesign:Badged 
+                            Badge="Without Saving"  
+                            BadgeColorZoneMode="Dark">
+                            <Button x:Name="ButtonQuit" Cursor="Hand" Click="ButtonQuit_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Power" Margin="10,15,5,10"/>
+                                    <TextBlock Text="Quit" Margin="5,15,5,10"/>
+                                </StackPanel>
+                            </Button>
+                        </materialDesign:Badged>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>

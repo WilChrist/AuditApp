@@ -18,6 +18,7 @@ namespace ExcelleciaAuditApp.userControls
         private int i;
         private List<int> possibleScores;
         private Question question;
+        Audit audit;
         public UserControlCreate()
         {
             InitializeComponent();
@@ -59,10 +60,10 @@ namespace ExcelleciaAuditApp.userControls
 
         private void CbxAudits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Audit audit = new Audit();
+            audit = new Audit();
             audit = (Audit)cbxAudits.SelectedItem;
             //Session.AuditContext.Entry(audit).Collection(a => a.Questions).Load();
-
+            bdgReport.Badge = audit.Name;
             cbxCategories.ItemsSource = Session.AuditContext.Categories.Where(c => c.Questions.Any(q => q.Audits.Any(a => a.Id == audit.Id))).ToList();
             cbxCategories.DisplayMemberPath = "Name";
             SnackbarOne.IsActive = true;
@@ -131,6 +132,23 @@ namespace ExcelleciaAuditApp.userControls
             Session.Save();
 
 
+        }
+
+        private void ButtonGenerateReport_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbxAudits.SelectedItem == null && i < 1)
+            {
+                //MessageBox.Show("Please Choose an audit first", App.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
+                dlgHost1.ShowDialog(mbx);
+
+                cbxAudits.Focus();
+                i++;
+            }
+            else
+            {
+                audit = (Audit)cbxAudits.SelectedItem;
+                
+            }
         }
     }
 }
