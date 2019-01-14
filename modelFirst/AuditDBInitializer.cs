@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace modelFirst
 {
-    public class AuditDBInitializer : SqliteDropCreateDatabaseWhenModelChanges<AuditContext>
+    public class AuditDBInitializer : SqliteDropCreateDatabaseAlways<AuditContext>
     {
         public AuditDBInitializer(DbModelBuilder modelBuilder) : base(modelBuilder)
         {

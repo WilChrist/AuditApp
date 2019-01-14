@@ -36,6 +36,11 @@ namespace ExcelleciaAuditApp.userControls
             {
                 e.Cancel = true;
             }
+            if (propertyDescriptor.DisplayName == "AuditedCompanyName")
+            {
+                e.Column.Header = "Audited Company Name";
+            }
+
         }
 
         private void DtgAudits_AddingNewItem(object sender, AddingNewItemEventArgs e)

@@ -56,6 +56,7 @@
                     LostFocus="CbxCategories_LostFocus"
                     SelectionChanged="CbxCategories_SelectionChanged">
                 </ComboBox>
+                <Image Source="..\assets\parcit-logo.png" Height="50"/>
                 <materialDesign:Snackbar   
                     MessageQueue="{materialDesign:MessageQueue}"
                     IsActive="False"  
