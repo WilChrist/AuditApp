@@ -158,6 +158,10 @@
     <Resource Include="assets\ESLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HandlingPdf\HandlingPdf.csproj">
+      <Project>{5f5cbfa1-b4d3-419d-8809-3939c40d24ff}</Project>
+      <Name>HandlingPdf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\modelFirst\modelFirst.csproj">
       <Project>{5958a65c-7a92-49f0-9f8b-1e5cfdbc3102}</Project>
       <Name>modelFirst</Name>
