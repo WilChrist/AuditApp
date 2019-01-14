@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            @font-face {
+                font-family: Lora;
+                src: url("data:font/truetype;charset=utf-8;base64,[[FONT]]");
+            }
+
+            html, body {
+                margin: 0;
+            }
+
+            body #root {
+                width: 210mm;
+                height: 296mm;
+                background-image: url("data:image/png;base64,[[BG_IMAGE]]");
+                background-repeat: no-repeat;
+                background-size: contain;
+                color: white;
+                font-family: "Lora", serif;
+            }
+
+            body #root h1, body #root h2, body #root h3, body #root h4, body #root h5, body #root h6 {
+                margin: 0;
+            }
+
+            body #root header #audited-logo {
+                margin-left: 105mm;
+            }
+
+            body #root header .logo-area {
+                font-size: 1em;
+                font-weight: bold;
+                display: inline-block;
+                width: 50mm;
+                height: 70mm;
+                margin-top: 8mm;
+                margin-bottom: 55mm;
+            }
+
+            body #root header .logo-area .image-container {
+                width: 100%;
+                height: 70%;
+            }
+
+            body #root header .logo-area .image-container img {
+                width: 100%;
+                height: 100%;
+            }
+
+            body #root header .logo-area .name-container {
+                text-align: center;
+            }
+
+            body #root main #title-area h1 {
+                font-weight: bold;
+                font-size: 5em;
+                margin: 5mm 0 0 5mm;
+            }
+
+            body #root main #title-area h2 {
+                font-size: 2em;
+                margin: 0 20mm;
+            }
+
+            body #root footer {
+                margin: 40mm 0 0 5mm;
+            }
+
+            body #root footer #auditor-area .name-container p {
+                margin: 1mm;
+                color: #ccc;
+                font-style: italic;
+            }
+
+            body #root footer #auditor-area .name-container h4 {
+                font-size: 1.5em;
+            }
+
+        body #root footer #auditor-area #signature-rectangle {
+            width: 30mm;
+            height: 20mm;
+            margin: 3mm 0;
+            background-color: #ccc;
+        }
+
+        body #root footer #date-area time {
+            font-style: italic;
+            color: #555;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <header>
+                <div id="tfx-logo" class="logo-area">
+                    <div class="image-container">
+                        <img src="data:image/png;base64,[[LOGO1]]" alt="TouFranXis logo" />
+                    </div>
+                    <div class="name-container">
+                        <p>
+                            Excellencia
+                            <br />
+                            Corp
+                        </p>
+                    </div>
+                </div>
+                <div id="audited-logo" class="logo-area">
+                        <div class="image-container">
+                            <img src="data:image/png;base64,[[LOGO2]]" alt="TouFranXis logo" />
+                        </div>
+                        <div class="name-container">
+                            <p>
+                                [[AUDITED_COMPANY]]
+                            </p>
+                        </div>
+                    </div>
+            </header>
+            <main>
+                <div id="title-area">
+                    <div class="brand-name">
+                        <h2>
+                            Excellencia Security
+                        </h2>
+                    </div>
+                    <div class="title">
+                        <h1>
+                            RAPPORT
+                        </h1>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <div id="auditor-area">
+                    <div class="name-container">
+                        <p>Auditeur</p>
+                        <h4>[[EMPLOYEE]]</h4>
+                    </div>
+                    <div id="signature-rectangle"></div>
+                </div>
+                <div id="date-area">
+                    <time datetime="2018-12-12 14:58">12/12/2018</time>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

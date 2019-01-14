@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="AuditContext.cs" />
     <Compile Include="AuditDBInitializer.cs" />
+    <Compile Include="AuditDBInitializer2.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\Audit.cs" />
     <Compile Include="Model\Auditer.cs" />

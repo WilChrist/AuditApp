@@ -4,7 +4,9 @@ using modelFirst.Model;
 using System;
 using System.Linq;
 using System.Windows;
-
+using HandlingPdf.pdf;
+using System.Reflection;
+using System.IO;
 namespace ExcelleciaAuditApp
 {
     /// <summary>
@@ -16,6 +18,15 @@ namespace ExcelleciaAuditApp
         {
             InitializeComponent();
             Init();
+            PdfGenerator generator = new PdfGenerator();
+            //mettre le chemin (défaut c:\)
+            generator.OuthPutPath = "C:\\Users\\francis\\Desktop\\rapport.pdf";
+            //nom de l'auditeur
+            generator.EmployeeName = "Francis D";
+            //nom de l'entreprise auditée
+            generator.CompanyName = "Audited Company";
+            //générer l'audit par id
+            generator.generateReport(1);
         }
 
         public void Init()

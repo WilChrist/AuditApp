@@ -38,7 +38,7 @@ namespace modelFirst
                 .WithRequired(a=>a.Question)
                 .Map(m => m.MapKey("Question_Id"));
 
-            var sqliteConnectionInitializer = new AuditDBInitializer(modelBuilder);
+            var sqliteConnectionInitializer = new AuditDBInitializer2(modelBuilder);
             Database.SetInitializer(sqliteConnectionInitializer);
         }
 
