@@ -62,7 +62,6 @@ namespace ExcelleciaAuditApp.userControls
             Audit audit = new Audit();
             audit = (Audit)cbxAudits.SelectedItem;
             //Session.AuditContext.Entry(audit).Collection(a => a.Questions).Load();
-
             cbxCategories.ItemsSource = Session.AuditContext.Categories.Where(c => c.Questions.Any(q => q.Audits.Any(a => a.Id == audit.Id))).ToList();
             cbxCategories.DisplayMemberPath = "Name";
             SnackbarOne.IsActive = true;

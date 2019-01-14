@@ -2,6 +2,7 @@
 using SQLite.CodeFirst;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -22,17 +23,17 @@ namespace modelFirst
 
             Category physic = new Category();
             physic.Id = 1;
-            physic.Name = "Sécurité Pysique";
+            physic.Name = "Securite Pysique";
             context.Categories.Add(physic);
 
             Category reseau = new Category();
             reseau.Id = 2;
-            reseau.Name = "Sécurité Réseau";
+            reseau.Name = "Securite Reseau";
             context.Categories.Add(reseau);
 
             Category strategie = new Category();
-            reseau.Id = 3;
-            reseau.Name = "Strategie interne";
+            strategie.Id = 3;
+            strategie.Name = "Strategie interne";
             context.Categories.Add(strategie);
 
             Question q1 = new Question();
@@ -644,7 +645,13 @@ namespace modelFirst
                 UpdateAt = DateTime.Now
             };
 
+            List<Question> questions = new List<Question>()
+            {
+                q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39, q40, q41, q42, q43, q44, q45
+            };
+
             audit.Auditer = auditer;
+            audit.Questions = new ObservableCollection<Question>(questions);
             context.Audits.Add(audit);
 
             context.SaveChanges();
