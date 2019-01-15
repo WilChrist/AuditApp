@@ -13,6 +13,7 @@ namespace ExcelleciaAuditApp.helper
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //Console.WriteLine("&&&&&&&&&&&&&&&&&&&&& InBooleanConverter &&&&&&&&&&&&&&&&&&&&&&");
             bool ? original = (bool ?)value;
             return !original;
         }

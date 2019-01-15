@@ -67,7 +67,7 @@ namespace HandlingPdf.pdf
             this.Renderer.Options.MarginLeft = 0;
             this.Renderer.Options.JpegCompressionLevel = 0;
             this.Renderer.Options.DrawBackground = true;
-            this.Renderer.Options.AutoFitWidth = HtmlToPdfPageFitMode.NoAdjustment;
+            this.Renderer.Options.AutoFitWidth = HtmlToPdfPageFitMode.AutoFit;
             this.setCoverPageTemplate();
 
             /*
@@ -118,7 +118,7 @@ namespace HandlingPdf.pdf
         {
             List<Category> listCat = this.auditContext.Categories.ToList();
 
-            this.DataAsString = "<h1>Questions Répondu</h1><table><tr><td>Categorie</td><td>Nombre de questions</td><td>Nb Répondues</td><td>Nb Oui</td><td>Nb Non</td><td>Nb NAN</td></tr>";
+            this.DataAsString = "<h1>Questions Répondues</h1><table><tr><td>Categorie</td><td>Nombre de questions</td><td>Nb Répondues</td><td>Nb Oui</td><td>Nb Non</td><td>Nb NAN</td></tr>";
             foreach (Category cat in listCat)
             {
                

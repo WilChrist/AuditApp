@@ -18,15 +18,6 @@ namespace ExcelleciaAuditApp
         {
             InitializeComponent();
             Init();
-            PdfGenerator generator = new PdfGenerator();
-            //mettre le chemin (défaut c:\)
-            generator.OuthPutPath = "C:\\Users\\francis\\Desktop\\rapport.pdf";
-            //nom de l'auditeur
-            generator.EmployeeName = "Francis D";
-            //nom de l'entreprise auditée
-            generator.CompanyName = "Audited Company";
-            //générer l'audit par id
-            generator.generateReport(1);
         }
 
         public void Init()
@@ -49,7 +40,7 @@ namespace ExcelleciaAuditApp
             password = pwdboxPassword.Password;
             //password = BCrypt.Net.BCrypt.HashPassword(password);
 
-            Console.WriteLine($"{email} + {password}");
+            //Console.WriteLine($"{email} + {password}");
 
             
                 Auditer auditer = Session.AuditContext.Auditers.Include("Audits.Questions.Answers").FirstOrDefault(a => a.Email.Equals(email));
@@ -70,6 +61,11 @@ namespace ExcelleciaAuditApp
                 MessageBox.Show("Login Attempt OverFlow, Please contact your manager", App.AppName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 App.Current.Shutdown();
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtboxEmail.Focus();
         }
     }
 }

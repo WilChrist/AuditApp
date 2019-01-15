@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:ExcelleciaAuditApp.userControls"
-             xmlns:localHelper="clr-namespace:ExcelleciaAuditApp.helper"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:localHelper="clr-namespace:ExcelleciaAuditApp.helper"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}" 
              TextElement.FontWeight="Medium"
@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <localHelper:InvertBooleanConverter  x:Key="boolConvert"/>
+            <localHelper:InverseBooleanToVisibilityConverter  x:Key="visConvert"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="Red">
@@ -32,9 +33,10 @@
                     Message="Please Select a Category Now"   
                     IsActive="False"  
                     x:Name="SnackbarOne" 
-                    Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                    Foreground="{DynamicResource PrimaryHueLightBrush}"
                     Margin="10,1,1,0"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Background="Black"/>
                 <ComboBox  
                     materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                     x:Name="cbxAudits"
@@ -44,6 +46,8 @@
                     Margin="10,10"
                     Width="Auto"
                     SelectionChanged="CbxAudits_SelectionChanged"
+                    IsEditable="False"
+                    IsReadOnly="True"
                     >
                 </ComboBox>
                 <ComboBox  
@@ -77,10 +81,12 @@
                     x:Name="SnackbarTwo"
                     Foreground="{DynamicResource PrimaryHueDarkBrush}"
                     Margin="10,1,20,0"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Background="White"
+                    />
             </StackPanel>
         </Grid>
-        <materialDesign:DialogHost x:Name="dlgHost1" Background="{DynamicResource MaterialDesignBackground}">
+        <materialDesign:DialogHost  x:Name="dlgHost1" Background="{DynamicResource MaterialDesignBackground}">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel Width="200" Height="50" Margin="20" Orientation="Vertical" x:Name="mbx" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock>Please Choose an audit first</TextBlock>
@@ -96,8 +102,13 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-        <materialDesign:DialogHost x:Name="dlhHost2" Background="{DynamicResource MaterialDesignPaper}">
+        <materialDesign:DialogHost 
+            x:Name="dlhHost2" 
+            Visibility="Hidden"
+            CloseOnClickAway="False"
+            x:FieldModifier="public">
             <materialDesign:DialogHost.DialogContent>
+                
                 <StackPanel 
                     Width="600" 
                     Height="450" 
@@ -147,7 +158,8 @@
                                 TextElement.Foreground="Black"
                                 TextElement.FontStyle="Italic"
                                 TextElement.FontSize="18"
-                                Margin="15,10,15,10">
+                                Margin="15,10,15,10"
+                                TextWrapping="Wrap">
 
                             </TextBlock>
                             <StackPanel  x:Name="stkpAnswer">
@@ -165,7 +177,7 @@
                                     x:Name="radio2"   
                                     Style="{StaticResource MaterialDesignRadioButton}"
                                     Content="No"
-                                    IsChecked="{Binding Path=IsChecked, ElementName=radio1,Converter={StaticResource boolConvert}}"
+                                    IsChecked="{Binding Reply, Mode=TwoWay,Converter={StaticResource boolConvert}}"
                                     Margin="20"/>
 
                                     <ComboBox 
@@ -197,18 +209,8 @@
                                     TextWrapping="Wrap" 
                                     VerticalScrollBarVisibility="Auto"
                                     materialDesign:HintAssist.Hint="Recommandation To Apply"
-                                    Visibility="{Binding Path=IsChecked, ElementName=radio1, Converter={StaticResource BooleanToVisibilityConverter }}" />
-                                    <TextBox
-                                    Text="{Binding RiskIncurred, Mode=TwoWay}"
-                                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                                    Margin="15,0,15,0"
-                                    VerticalAlignment="Top"
-                                    Height="80"
-                                    AcceptsReturn="True"
-                                    TextWrapping="Wrap" 
-                                    VerticalScrollBarVisibility="Auto"
-                                    materialDesign:HintAssist.Hint="Risk Incurred"
-                                    Visibility="{Binding Path=IsChecked, ElementName=radio2, Converter={StaticResource BooleanToVisibilityConverter }}" />
+                                    Visibility="{Binding Path=Reply, Converter={StaticResource visConvert }}" />
+                                    
                                 </StackPanel>
                                 <TextBox 
                                 Text="{Binding Comment, Mode=TwoWay}"
@@ -234,6 +236,25 @@
 
 
 
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost  x:Name="dlgHost3" Background="{DynamicResource MaterialDesignBackground}" Visibility="Collapsed">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Width="200" Height="150" Margin="20" Orientation="Vertical" x:Name="mbxProgress" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontWeight="Bold" Foreground="Black">Report generation : Please wait... </TextBlock>
+                    <materialDesign:Card   
+                        UniformCornerRadius="50"  
+                        Padding="2"
+                        Width="100"
+                        Height="100"
+                        Margin="20">
+                        <ProgressBar Width="50" Height="50" Margin="15"
+                                 Style="{DynamicResource MaterialDesignCircularProgressBar}"
+                                 IsIndeterminate="True"
+                                 Value="33"
+                                 x:Name="pgrbReport"/>
+                    </materialDesign:Card>
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
